@@ -28,7 +28,7 @@ exports.createTodoItem = async (req, res) => {
 // Atualizar um item da lista de tarefas
 exports.updateTodoItem = async (req, res) => {
     try {
-        const { content, completed } = req.body;
+        const { title, content, completed } = req.body;
         const todoItemId = req.params.id;
 
         const updatedTodoItem = await TodoItem.findByIdAndUpdate(todoItemId, { content, completed }, { new: true });
