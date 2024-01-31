@@ -1,5 +1,7 @@
 const TodoList = require('../models/TodoList');
+const TodoItem = require('../models/TodoItem')
 const User = require('../models/User');
+const todoItemController = require('../controllers/todoItemController')
 
 // Criar uma nova lista de tarefas
 exports.createTodoList = async (req, res) => {
@@ -36,10 +38,10 @@ exports.getTodoListsByUser = async (req, res) => {
 // Atualizar uma lista de tarefas
 exports.updateTodoList = async (req, res) => {
     try {
-        const { title } = req.body;
+        const { title, items } = req.body;
         const todoListId = req.params.id;
 
-        const updatedTodoList = await TodoList.findByIdAndUpdate(todoListId, { title }, { new: true });
+        const updatedTodoList = await TodoList.findByIdAndUpdate(todoListId, { title, items }, { new: true });
         if (!updatedTodoList) {
             return res.status(404).json({ message: 'Lista de tarefas não encontrada' });
         }
@@ -54,11 +56,16 @@ exports.updateTodoList = async (req, res) => {
 exports.deleteTodoList = async (req, res) => {
     try {
         const todoListId = req.params.id;
-
+        
         const deletedTodoList = await TodoList.findByIdAndDelete(todoListId);
         if (!deletedTodoList) {
             return res.status(404).json({ message: 'Lista de tarefas não encontrada' });
-        }
+        }        
+
+        deletedTodoList.items.map(async (item) => {
+            console.log(item._id.toString())
+            await TodoItem.findByIdAndDelete(item._id.toString());
+        })
 
         res.json({ message: 'Lista de tarefas deletada com sucesso' });
     } catch (error) {

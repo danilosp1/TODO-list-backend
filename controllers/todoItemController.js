@@ -12,7 +12,7 @@ exports.createTodoItem = async (req, res) => {
             return res.status(404).json({ message: 'Lista de tarefas não encontrada' });
         }
 
-        const newTodoItem = new TodoItem({ content });
+        const newTodoItem = new TodoItem({ content, list: todoListId });
         await newTodoItem.save();
 
         // Adicionar o item à lista de tarefas
@@ -25,10 +25,33 @@ exports.createTodoItem = async (req, res) => {
     }
 };
 
+// Obter um item da lista de tarefas
+exports.getTodoItem = async (req, res) => {
+    try {
+        const todoItemId = req.params.id;
+        const todoItem = await TodoItem.findById(todoItemId);
+
+        res.json(todoItem);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getTodoItemsByList = async (req, res) => {
+    try {
+        const todoListId = req.params.id;
+        const todoItems = await TodoItem.find({ list: todoListId });
+
+        res.json(todoItems);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Atualizar um item da lista de tarefas
 exports.updateTodoItem = async (req, res) => {
     try {
-        const { title, content, completed } = req.body;
+        const { content, completed } = req.body;
         const todoItemId = req.params.id;
 
         const updatedTodoItem = await TodoItem.findByIdAndUpdate(todoItemId, { content, completed }, { new: true });

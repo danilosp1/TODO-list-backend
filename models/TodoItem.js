@@ -8,6 +8,11 @@ const todoItemSchema = new mongoose.Schema({
     completed: {
         type: Boolean,
         default: false
+    },
+    list: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'TodoList',
+        required: true
     }
 });
 

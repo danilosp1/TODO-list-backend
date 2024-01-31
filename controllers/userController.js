@@ -29,7 +29,8 @@ exports.login = async (req, res) => {
         if (user && (await bcrypt.compare(password, user.password))) {
             // Gerar token JWT
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            res.json({ message: 'Login bem sucedido', token });
+            const id = user._id
+            res.json({ message: 'Login bem sucedido', token, id });
         } else {
             res.status(400).json({ message: 'Usuário ou senha inválidos' });
         }
