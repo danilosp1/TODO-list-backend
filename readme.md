@@ -9,5 +9,5 @@
 ```
 JWT_SECRET=token
 MONGO_URI=mongodb://localhost:27017/todolist
-PORT=3000
+PORT=3001
 ```
