@@ -3,10 +3,10 @@ const router = express.Router();
 const todoItemController = require('../controllers/todoItemController');
 const authenticate = require('../middlewares/auth');
 
-router.post('/', todoItemController.createTodoItem);
-router.get('/list/:id', todoItemController.getTodoItemsByList);
-router.get('/:id', todoItemController.getTodoItem);
-router.put('/:id', todoItemController.updateTodoItem);
-router.delete('/:id', todoItemController.deleteTodoItem);
+router.post('/', authenticate, todoItemController.createTodoItem);
+router.get('/list/:id', authenticate, todoItemController.getTodoItemsByList);
+router.get('/:id', authenticate, todoItemController.getTodoItem);
+router.put('/:id', authenticate, todoItemController.updateTodoItem);
+router.delete('/:id', authenticate, todoItemController.deleteTodoItem);
 
 module.exports = router;
