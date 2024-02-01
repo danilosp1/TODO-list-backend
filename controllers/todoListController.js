@@ -46,6 +46,7 @@ exports.updateTodoList = async (req, res) => {
             return res.status(404).json({ message: 'Lista de tarefas não encontrada' });
         }
 
+
         res.json(updatedTodoList);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -72,3 +73,23 @@ exports.deleteTodoList = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.updateOrderList = async (req, res) => {
+    try {
+        const todoListId = req.params.id;
+        const { itemIds } = req.body; 
+
+        const todoList = await TodoList.findById(todoListId);
+        if (!todoList) {
+            return res.status(404).send('Lista não encontrada.');
+        }
+
+        todoList.items = itemIds;
+        await todoList.save();
+
+        res.send('Ordem atualizada com sucesso.');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erro ao atualizar a ordem da lista.');
+    }
+}

@@ -51,10 +51,10 @@ exports.getTodoItemsByList = async (req, res) => {
 // Atualizar um item da lista de tarefas
 exports.updateTodoItem = async (req, res) => {
     try {
-        const { content, completed } = req.body;
+        const { content, completed, list } = req.body;
         const todoItemId = req.params.id;
 
-        const updatedTodoItem = await TodoItem.findByIdAndUpdate(todoItemId, { content, completed }, { new: true });
+        const updatedTodoItem = await TodoItem.findByIdAndUpdate(todoItemId, { content, completed, list }, { new: true });
         if (!updatedTodoItem) {
             return res.status(404).json({ message: 'Item de tarefa não encontrado' });
         }

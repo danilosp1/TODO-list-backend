@@ -7,5 +7,6 @@ router.post('/', todoListController.createTodoList);
 router.get('/:userId', todoListController.getTodoListsByUser);
 router.put('/:id', todoListController.updateTodoList);
 router.delete('/:id', todoListController.deleteTodoList);
+router.post('/:id/updateOrder', todoListController.updateOrderList);
 
 module.exports = router;
