@@ -35,6 +35,18 @@ exports.getTodoListsByUser = async (req, res) => {
     }
 };
 
+// Obter lista a partir de ID
+exports.getTodoList = async (req, res) => {
+    try {
+        const listId = req.params.id;
+        const todoLists = await TodoList.findById(listId);
+
+        res.json(todoLists);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Atualizar uma lista de tarefas
 exports.updateTodoList = async (req, res) => {
     try {
