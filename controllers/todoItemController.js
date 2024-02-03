@@ -37,6 +37,7 @@ exports.getTodoItem = async (req, res) => {
     }
 };
 
+// Obter os itens a partir da lista de tarefas
 exports.getTodoItemsByList = async (req, res) => {
     try {
         const todoListId = req.params.id;
